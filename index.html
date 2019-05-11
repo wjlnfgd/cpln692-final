@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+    <link rel="stylesheet" href = "css/style.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+  </head>
+  <body>
+
+    <!-- Start Page -->
+  <div class="bg">
+    <img id="front" src="start-bg.png" width="100%" height="100%"/>
+      <h1 id="start-text">Coffee Shops In Pennsylvania</h1>
+      <button class="start-button" id="start"><span>Explore</span></button>
+    </div>
+
+<!-- Navigation Sidebar -->
+  <div class="navsidebar" hidden="hidden">
+
+    <!--logo-->
+    <div class = "blank"></div>
+    <div id="logo-container">
+      <img id="logo" src="coffee.png", width="165" height="70"/>
+    </div>
+    <div class="blank"></div>
+
+    <!--Navigation choices-->
+    <div class="nav-bars">
+      <ul class="nav na-pills nav-stacked">
+        <!--show the whole map of coffee stores-->
+        <li role="presentation" id="stores"><a href="#">
+          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+          Stores</a>
+        </li>
+        <!--show the basic information-->
+        <li role="presentation" id="info"><a href="#">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          Information</a>
+        </li>
+        <!--Search the ideal store-->
+        <li role="presentation" id="search"><a href="#">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          Search</a>
+        </li>
+        <!--Search the ideal store-->
+        <li role="presentation" id="route"><a href="#">
+          <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+          Route</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!--Interaction Sidebar-->
+  <div class="intersidebar" hidden="hidden">
+
+    <!--stores-->
+    <div class="subdiv" id="stores-page" hidden="hidden">
+      <span class="glyphicon glyphicon-remove-sign" arian-hidden="true" id="hideit1" style="font-size:20px;color:rgba(232, 232, 232, 0.5);float:right;"></span>
+      <div class="Title">
+        <h3 style="color:rgba(232, 232, 232, 0.7); vertical-align:middle;margin-botton:5px;margin-left:20px;margin-right:20px;margin-top:40px">Choose a standard</h3>
+      </div>
+      <ul class="nav nav-pills nav-stacked" id="storeStandards" style="margin-top:20px">
+        <li role="presentation" id= "storeStandardOne" style="margin-bottom:5px;margin-left:20px;margin-right:20px"><a href="#">Sales Volumn</a>
+        </li>
+        <li role="presentation" id="storeStandardTwo" style="margin-bottom:5px;margin-left:20px;margin-right:20px"><a href="#">Number of Employees</a>
+        </li>
+        <li role="presentation" id="storeStandardThree" style="margin-bottom:5px;margin-left:20px;margin-right:20px"><a href="#">Business Status</a>
+        </li>
+        <li role="presentation" id="storeStandardFour" style="margin-bottom:5px;margin-left:20px;margin-right:20px"><a href="#">Square Footage</a>
+        </li>
+      </ul>
+    </div>
+
+    <!--information-->
+    <div class="subdiv" id="info-page" style="margin-bottom:15px" hidden="hidden">
+      <span class="glyphicon glyphicon-remove-sign" arian-hidden="true" id="hideit2" style="font-size:20px;color:rgba(232,232,232,0.5);float:right;"></span>
+      <div class="Title">
+        <h3 style="color:rgba(232, 232, 232, 0.7); vertical-align:middle;margin-botton:5px;margin-left:20px;margin-right:20px;margin-top:40px">Information for Each Store</h3>
+      </div>
+      <h5 class="info-subtitle">Business</h5>
+      <div class="input-group">
+        <input id="store-id" type="text" class="form-control" placeholder="Store ID" disabled>
+        <input id="county" type="text" class="form-control" placeholder="County" disabled>
+        <input id="address" type="text" class="form-control" placeholder="Address" disabled>
+        <input id="zipcode" type="text" class="form-control" placeholder="Zipcode" disabled>
+        <input id="salesvol" type="text" class="form-control" placeholder="Sales Volumn" disabled>
+        <input id="employees" type="text" class="form-control" placeholder="Number of Employees" disabled>
+        <input id="bstatus" type="text" class="form-control" placeholder="Business Status" disabled>
+        <input id="sq" type="text" class="form-control" placeholder="Square Footage" disabled>
+      </div>
+
+      <h5 class="info-subtitle">Demographic</h5>
+      <div class="input-group">
+        <input id="pop" type="text" class="form-control" placeholder="Population" disabled>
+        <input id="hhs" type="text" class="form-control" placeholder="Household" disabled>
+        <input id="medinc" type="text" class="form-control" placeholder="Median Income" disabled>
+        <input id="medvalue" type="text" class="form-control" placeholder="Median House Value" disabled>
+        <input id="pctcollege" type="text" class="form-control" placeholder="Percent of College" disabled>
+      </div>
+
+      <h5 class="info-subtitle">Infrastructure</h5>
+      <div class="input-group">
+        <input id="highway" type="text" class="form-control" placeholder="Distance to Highway" disabled>
+        <input id="otherstore" type="text" class="form-control" placeholder="Distance to other stores" disabled>
+        <input id="empcenter" type="text" class="form-control" placeholder="Distance to Employment Center" disabled>
+      </div>
+    </div>
+
+    <!--search-->
+    <div class="subdiv" id="search-page" hidden="hidden">
+      <span class="glyphicon glyphicon-remove-sign" arian-hidden="true" id="hideit3" style="font-size:20px;color:rgba(232,232,232,0.5);float:right"></span>
+      <div class="Title" >
+        <h3 style="color:rgba(232,232,232,0.7);vertical-align:middle;margin-bottom:5px;margin-left:20px;margin-right:20px;margin-top:40px;">Search Your Ideal Store</h3>
+      </div>
+
+      <!--two search standards-->
+      <div class="search-choice" id="search-choiceOne" style="color:rgba(232,232,232,0.7);margin-left:50px">
+        <span class="glyphicon glyphicon-align-left" aria-hidden="true" style="font-size:40px;"></span>Sales Volumn
+      </div>
+      <div class="search-choice" id="search-choiceTwo" style="color:rgba(232,232,232,0.7);margin-left:50px">
+        <span class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:40px;"></span>Employees
+      </div>
+
+      <!--Criterion one-->
+      <div class="searchcriterion" id="searchcriterionOne" hidden="hidden">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation" id="searchone-above" style="margin-bottom:5px;margin-top:10px"><a href="#">Above Average</a>
+          </li>
+          <li role="presentation" id="searchone-below" style="margin-bottom:5px;margin-top:10px"><a href="#">Below Average</a>
+          </li>
+          <li role="presentation" id="searchone-range" style="margin-bottom:5px;margin-top:10px"><a href="#">Your Range</a>
+          </li>
+        </ul>
+      </div>
+
+      <!--criterion two-->
+      <div class="searchcriterion" id="searchcriterionTwo" hidden="hidden">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation" id="searchtwo-above" style="margin-bottom:5px;margin-top:10px"><a href="#">Above Average</a>
+          </li>
+          <li role="presentation" id="searchtwo-below" style="margin-bottom:5px;margin-top:10px"><a href="#">Below Average</a>
+          </li>
+          <li role="presentation" id="searchtwo-range" style="margin-bottom:5px;margin-top:10px"><a href="#">Your Range</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- range one-->
+      <div class="search-custom" id="searchcustomOne" hidden="hidden">
+        <h5> From</h5>
+        <input class="form-control" id="salesvolLow" type="number"  placeholder="Up to 4,800" style="color:black">
+        <h5> To</h5>
+        <input class="form-control" id="salesvolHigh" type="number"  placeholder="No Less Than 80" style="color:black">
+      </div>
+
+      <!---range two-->
+      <div class="search-custom" id="searchcustomTwo" hidden="hidden">
+        <h5>From>/h5>
+        <input class="form-control" id="empLow" type="number" placeholder="Up to 120" style="color:black">
+        <h5>To</h5>
+        <input class="form-control" id="empHigh" type="number" placeholder="No Less Than 2" style="color:black">
+      </div>
+
+      <!--search button-->
+      <div class="generateButton" id="generateButtonSearch" hidden="hidden">
+        <button class="button" id="SearchGo">Go</button>
+        <button class="button" id="searchClear">Clear</button>
+      </div>
+    </div>
+
+    <!--route-->
+    <div class="subdiv" id="route-page" hidden="hidden">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" id="hideit4" style="font-size:20px;color:rgba(232,232,232,0.5);float:right"></span>
+      <div class="Title">
+        <h3 style="color:rgba(232,232,232,0.7);vertical-align:middle;margin-bottom:5px;margin-left:20px;margin-right:20px;margin-top:40px">Find the Route</h3>
+      </div>
+      <p id="routeText">Find the route to your selected coffee store in PA.</p>
+      <div class="formGroup">
+        <label for="usr" style="color:rgba(232,232,232,0.7)">Store ID:</label>
+        <input type="text" class="form-control" id="usr">
+      </div>
+      <div class="generateButton" id="generateButtonRoute">
+        <button class="button" id="go">Go</button>
+        <button class="button" id="clear">Clear</button>
+      </div>
+    </div>
+
+    <!--map-->
+    <div class="map" id="map" hidden="hidden"></div>
+
+    <!-- Javascript Imports -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" integrity="sha256-CNm+7c26DTTCGRQkM9vp7aP85kHFMqs9MhPEuytF+fQ=" crossorigin="anonymous"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    <script src="js/decode.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/functions.js"></script>
+
+  </body>
+</html>
