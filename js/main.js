@@ -19,7 +19,7 @@ L.control.zoom({
 
 
 //data Imports
-var rawData = "https://raw.githubusercontent.com/wjlnfgd/final/master/data/coffeePA.geojson";
+var rawData = "https://raw.githubusercontent.com/wjlnfgd/cpln692-final/master/data/coffeePA.geojson";
 
 $.ajax(rawData).done(function(data){
   var parsedData = JSON.parse(data);
