@@ -595,7 +595,7 @@ $('#filter-choice2-custom').click(function(e){
   filterSelection = 3;
 });
 
-$('#filter-go').click(function(e){
+$('#search-go').click(function(e){
   // Set view
   map.setView([41.0131,-77.6184],8);
   // Get user input
@@ -646,7 +646,7 @@ var removeFilterInput = function(){
   }
 };
 
-$('#filter-clear').click(function(e){
+$('#search-clear').click(function(e){
   removeFilterInput();
   removeMarker();
 });

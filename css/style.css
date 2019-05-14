@@ -258,14 +258,14 @@ h5 {
   margin-top: 5px;
 }
 
-#filter-go {
+#search-go {
   display: inline-block;
   position:absolute;
   margin-left: 180px;
   margin-top: 15px;
 }
 
-#filter-clear {
+#search-clear {
   display: inline-block;
   position:absolute;
   margin-left: 240px;

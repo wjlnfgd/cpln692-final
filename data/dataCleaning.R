@@ -6,7 +6,7 @@ library(rmapshaper)
 
 rawData<-read.csv("C:/Users/wjlnf/Desktop/test/final/data/Final_CoffeeDatasetforR.csv")
 
-##########  Select the Brands   #########
+##########  Select the Brands   ###########
 chainStore<-
   rawData %>%
   group_by(CONAME)%>%
